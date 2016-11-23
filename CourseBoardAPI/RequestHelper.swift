@@ -11,6 +11,6 @@ import Foundation
 class RequestHelper {
     
     static var authToken = ""
-    static let baseUrl = "http://meancourseboard.herokuapp.com"
+    static let baseUrl = "###"
     
 }
