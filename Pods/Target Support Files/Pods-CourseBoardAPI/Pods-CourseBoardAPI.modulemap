@@ -1,0 +1,6 @@
+framework module Pods_CourseBoardAPI {
+  umbrella header "Pods-CourseBoardAPI-umbrella.h"
+
+  export *
+  module * { export * }
+}
