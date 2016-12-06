@@ -10,17 +10,17 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-extension RequestHelper {
+extension CourseBoardAPI {
     
     // MARK: Get Updates -- READY
     static func getUpdates(productId: String, update: Update, complete: @escaping ( _ updates: [Update]?, _ error: NSError?) -> Void) {
         
         // Create the path and url
         let path = "/api/products/\(productId)/updates"
-        let url = RequestHelper.baseUrl + path
+        let url = CourseBoardAPI.baseUrl + path
         
         // Headers
-        let headers = ["Authorization": "Basic " + RequestHelper.authToken]
+        let headers = ["Authorization": "Basic " + CourseBoardAPI.authToken]
         
         // Request the data from api
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).validate().responseJSON() { response in
@@ -59,10 +59,10 @@ extension RequestHelper {
         
         // Create the path and url
         let path = "/api/products/\(productId)/updates"
-        let url = RequestHelper.baseUrl + path
+        let url = CourseBoardAPI.baseUrl + path
         
         // Headers
-        let headers = ["Authorization": "Basic " + RequestHelper.authToken]
+        let headers = ["Authorization": "Basic " + CourseBoardAPI.authToken]
         
         // Set up parameters with course
         var parameters: [String: AnyObject] = [:]
@@ -111,10 +111,10 @@ extension RequestHelper {
         
         // Create the path and url
         let path = "/api/updates/\(updateId)"
-        let url = RequestHelper.baseUrl + path
+        let url = CourseBoardAPI.baseUrl + path
         
         // Headers
-        let headers = ["Authorization": "Basic " + RequestHelper.authToken]
+        let headers = ["Authorization": "Basic " + CourseBoardAPI.authToken]
         
         // Set up parameters with course
         var parameters: [String: AnyObject] = [:]
@@ -163,10 +163,10 @@ extension RequestHelper {
         
         // Create the path and url
         let path = "/api/updates/\(updateId)"
-        let url = RequestHelper.baseUrl + path
+        let url = CourseBoardAPI.baseUrl + path
         
         // Headers
-        let headers = ["Authorization": "Basic " + RequestHelper.authToken]
+        let headers = ["Authorization": "Basic " + CourseBoardAPI.authToken]
         
         // Request the data from api
         Alamofire.request(url, method: .delete, parameters: nil, encoding: JSONEncoding.default, headers: headers).validate().responseJSON() { response in

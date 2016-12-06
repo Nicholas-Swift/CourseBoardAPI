@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RequestHelper {
+class CourseBoardAPI {
     
     static var authToken = ""
     static let baseUrl = "http://meancourseboard.herokuapp.com"

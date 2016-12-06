@@ -9,17 +9,17 @@
 import Alamofire
 import SwiftyJSON
 
-extension RequestHelper {
+extension CourseBoardAPI {
     
-    // Posts from enrolled courses - READY
-    static func postsFromEnrolledCourses(userId: String, complete: @escaping ( _ posts: [Post]?, _ error: NSError?) -> Void) {
+    // Posts from enrolled courses - DONE
+    static func getPostsFromEnrolledCourses(userId: String, complete: @escaping ( _ posts: [Post]?, _ error: NSError?) -> Void) {
         
         // Create the path and url
         let path = "/api/users/\(userId)/posts"
-        let url = RequestHelper.baseUrl + path
+        let url = CourseBoardAPI.baseUrl + path
         
         // Headers
-        let headers = ["Authorization": "Basic " + RequestHelper.authToken]
+        let headers = ["Authorization": "Basic " + CourseBoardAPI.authToken]
         
         // Request the data from api
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).validate().responseJSON() { response in
@@ -53,15 +53,15 @@ extension RequestHelper {
         }
     }
     
-    // Posts from a single course -- READY
-    static func postsFromCourse(courseId: String, complete: @escaping ( _ posts: [Post]?, _ error: NSError?) -> Void) {
+    // Posts from a single course -- DONE
+    static func getPostsFromCourse(courseId: String, complete: @escaping ( _ posts: [Post]?, _ error: NSError?) -> Void) {
         
         // Create the path and url
         let path = "/api/courses/\(courseId)/posts"
-        let url = RequestHelper.baseUrl + path
+        let url = CourseBoardAPI.baseUrl + path
         
         // Headers
-        let headers = ["Authorization": "Basic " + RequestHelper.authToken]
+        let headers = ["Authorization": "Basic " + CourseBoardAPI.authToken]
         
         // Request the data from api
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).validate().responseJSON() { response in
@@ -100,10 +100,10 @@ extension RequestHelper {
         
         // Create the path and url
         let path = "/api/courses/\(courseId)/posts"
-        let url = RequestHelper.baseUrl + path
+        let url = CourseBoardAPI.baseUrl + path
         
         // Headers
-        let headers = ["Authorization": "Basic " + RequestHelper.authToken]
+        let headers = ["Authorization": "Basic " + CourseBoardAPI.authToken]
         
         // Set up parameters with course
         var parameters: [String: AnyObject] = [:]
@@ -152,10 +152,10 @@ extension RequestHelper {
         
         // Create the path and url
         let path = "/api/posts/\(postId)"
-        let url = RequestHelper.baseUrl + path
+        let url = CourseBoardAPI.baseUrl + path
         
         // Headers
-        let headers = ["Authorization": "Basic " + RequestHelper.authToken]
+        let headers = ["Authorization": "Basic " + CourseBoardAPI.authToken]
         
         // Set up parameters with course
         var parameters: [String: AnyObject] = [:]
@@ -202,10 +202,10 @@ extension RequestHelper {
         
         // Create the path and url
         let path = "/api/courses/\(courseId)/posts/\(postId)"
-        let url = RequestHelper.baseUrl + path
+        let url = CourseBoardAPI.baseUrl + path
         
         // Headers
-        let headers = ["Authorization": "Basic " + RequestHelper.authToken]
+        let headers = ["Authorization": "Basic " + CourseBoardAPI.authToken]
         
         // Request the data from api
         Alamofire.request(url, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: headers).validate().responseJSON() { response in

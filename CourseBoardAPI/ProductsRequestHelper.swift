@@ -9,14 +9,14 @@
 import Alamofire
 import SwiftyJSON
 
-extension RequestHelper {
+extension CourseBoardAPI {
     
-    // MARK: Get Current Products -- READY
+    // MARK: Get Current Products -- DONE
     static func getCurrentProducts(complete: @escaping ( _ products: [Product]?, _ error: NSError?) -> Void) {
         
         // Create the path and url
         let path = "/api/products"
-        let url = RequestHelper.baseUrl + path
+        let url = CourseBoardAPI.baseUrl + path
         
         // Request the data from api
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: nil).validate().responseJSON() { response in
@@ -50,12 +50,12 @@ extension RequestHelper {
         }
     }
     
-    // MARK: Get Specific Product -- READY
+    // MARK: Get Specific Product -- DONE
     static func getProduct(id: String, complete: @escaping ( _ product: Product?, _ error: NSError?) -> Void) {
         
         // Create the path and url
         let path = "/api/products/\(id)"
-        let url = RequestHelper.baseUrl + path
+        let url = CourseBoardAPI.baseUrl + path
         
         // Request the data from api
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: nil).validate().responseJSON() { response in
@@ -87,10 +87,10 @@ extension RequestHelper {
         
         // Create the path and url
         let path = "/api/courses"
-        let url = RequestHelper.baseUrl + path
+        let url = CourseBoardAPI.baseUrl + path
         
         // Headers
-        let headers = ["Authorization": "Basic " + RequestHelper.authToken]
+        let headers = ["Authorization": "Basic " + CourseBoardAPI.authToken]
         
         // Set up parameters with course
         var parameters: [String: AnyObject] = [:]
@@ -149,10 +149,10 @@ extension RequestHelper {
         
         // Create the path and url
         let path = "/api/products"
-        let url = RequestHelper.baseUrl + path
+        let url = CourseBoardAPI.baseUrl + path
         
         // Headers
-        let headers = ["Authorization": "Basic " + RequestHelper.authToken]
+        let headers = ["Authorization": "Basic " + CourseBoardAPI.authToken]
         
         // Set up parameters with course
         var parameters: [String: AnyObject] = [:]
@@ -210,10 +210,10 @@ extension RequestHelper {
         
         // Create the path and resource
         let path = "/api/products/\(id)"
-        let url = RequestHelper.baseUrl + path
+        let url = CourseBoardAPI.baseUrl + path
         
         // Headers
-        let headers = ["Authorization": "Basic " + RequestHelper.authToken]
+        let headers = ["Authorization": "Basic " + CourseBoardAPI.authToken]
         
         // Request the data from api
         Alamofire.request(url, method: .delete, parameters: nil, encoding: JSONEncoding.default, headers: headers).validate().responseJSON() { response in
@@ -245,10 +245,10 @@ extension RequestHelper {
         
         // Create the path and resource
         let path = "/api/products/\(id)/join"
-        let url = RequestHelper.baseUrl + path
+        let url = CourseBoardAPI.baseUrl + path
         
         // Headers
-        let headers = ["Authorization": "Basic " + RequestHelper.authToken]
+        let headers = ["Authorization": "Basic " + CourseBoardAPI.authToken]
         
         // Request the data from api
         Alamofire.request(url, method: .put, parameters: nil, encoding: JSONEncoding.default, headers: headers).validate().responseJSON() { response in
@@ -280,10 +280,10 @@ extension RequestHelper {
         
         // Create the path and resource
         let path = "/api/products/\(id)/leave"
-        let url = RequestHelper.baseUrl + path
+        let url = CourseBoardAPI.baseUrl + path
         
         // Headers and parameters
-        let headers = ["Authorization": "Basic " + RequestHelper.authToken]
+        let headers = ["Authorization": "Basic " + CourseBoardAPI.authToken]
         
         // Request the data from api
         Alamofire.request(url, method: .put, parameters: nil, encoding: JSONEncoding.default, headers: headers).validate().responseJSON() { response in

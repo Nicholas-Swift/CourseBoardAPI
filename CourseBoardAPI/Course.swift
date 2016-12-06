@@ -20,6 +20,7 @@ class Course {
     var title: String?
     var description: String?
     var duration: String?
+    var quarter: String?
     
     var startsOn: Date?
     //var startsOnDay: String?
@@ -55,7 +56,7 @@ class Course {
             self.id = id
         }
         
-        // createdAt, updatedAt, publishedAt
+        // createdAt, updatedAt, publishedAt, quarter
         if let createdAt = json["createdAt"].string {
             self.createdAt = DateHelper.toDate(stringDate: createdAt)
         }
@@ -64,6 +65,9 @@ class Course {
         }
         if let publishedAt = json["publishedAt"].string {
             self.publishedAt = DateHelper.toDate(stringDate: publishedAt)
+        }
+        if let quarter = json["quarter"].string {
+            self.quarter = quarter
         }
         
         // title, description, duration
