@@ -19,21 +19,22 @@ class Course {
     
     var title: String?
     var description: String?
-    var duration: String?
-    var quarter: String?
     
-    var startsOn: Date?
+    var quarter: String?
+    var weekdays: String?
+    var startTime: String?
+    var location: String?
+    
+    //var startsOn: Date?
     //var startsOnDay: String?
     //var startsOnMonth: String?
     //var startsOnYear: String?
     
-    var endsOn: Date?
+    //var endsOn: Date?
     //var endsOnDay: String?
     //var endsOnMonth: String?
     //var endsOnYear: String?
     
-    var hours: String?
-    var location: String?
     var objectives: [String]?
     
     var user: User?
@@ -66,44 +67,30 @@ class Course {
         if let publishedAt = json["publishedAt"].string {
             self.publishedAt = DateHelper.toDate(stringDate: publishedAt)
         }
-        if let quarter = json["quarter"].string {
-            self.quarter = quarter
-        }
         
-        // title, description, duration
+        // title, description
         if let title = json["title"].string {
             self.title = title
         }
         if let description = json["description"].string {
             self.description = description
         }
-        if let duration = json["duration"].string {
-            self.duration = duration
-        }
         
-        // starts on
-        if let startsOn = json["startsOn"].string {
-            self.startsOn = DateHelper.toDate(stringDate: startsOn)
+        // quarter, weekDays, startTime, location
+        if let quarter = json["quarter"].string {
+            self.quarter = quarter
         }
-        //var startsOnDay: String?
-        //var startsOnMonth: String?
-        //var startsOnYear: String?
-        
-        // ends on
-        if let endsOn = json["endsOn"].string {
-            self.endsOn = DateHelper.toDate(stringDate: endsOn)
+        if let weekdays = json["weekDays"].string {
+            self.weekdays = weekdays
         }
-        //var endsOnDay: String?
-        //var endsOnMonth: String?
-        //var endsOnYear: String?
-        
-        // hours, location, objective
-        if let hours = json["hours"].string {
-            self.hours = hours
+        if let startTime = json["startTime"].string {
+            self.startTime = startTime
         }
         if let location = json["location"].string {
             self.location = location
         }
+        
+        // objectives
         if let objectives = json["objectives"].array {
             self.objectives = objectives.map{$0.stringValue}
         }

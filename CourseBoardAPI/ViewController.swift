@@ -15,25 +15,6 @@ class ViewController: UIViewController {
         
         CourseBoardAPI.login(email: "nswift", password: "q1w2e3", complete: { (bool: Bool, error: NSError?) in
             
-            CourseBoardAPI.getCourses(complete: { (courses: [Course]?, error: NSError?) in
-                for course in courses ?? [] {
-                    CourseBoardAPI.getPostsFromCourse(courseId: course.id!, complete: { (post: [Post]?, error: NSError?) in
-                        for p in post ?? [] {
-                            print(p.body)
-                        }
-                    })
-                }
-            })
-            
-//            CourseBoardAPI.getPostsFromEnrolledCourses(userId: "578524a4a4e38b03006a2be6", complete: { (posts: [Post]?, error: NSError?) in
-//                
-//                if let posts = posts {
-//                    for post in posts {
-//                        print(post.body)
-//                    }
-//                }
-//                
-//            })
         })
     }
 

@@ -43,8 +43,7 @@ extension CourseBoardAPI {
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(nil, error as NSError?)
             }
         }
@@ -83,8 +82,7 @@ extension CourseBoardAPI {
                 
                 // Failure
                 case .failure(let error):
-                    print("error:")
-                    print(error)
+                    print("error: \(error)")
                     complete(nil, error as NSError?)
             }
         }
@@ -114,15 +112,14 @@ extension CourseBoardAPI {
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(nil, error as NSError?)
             }
         }
         
     }
     
-    // MARK: Create Course -- READY
+    // MARK: Create Course -- DONE
     static func createCourse(course: Course, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
         
         // Create the path and url
@@ -135,52 +132,38 @@ extension CourseBoardAPI {
         // Set up parameters with course
         var parameters: [String: AnyObject] = [:]
         
+        // title, description
+        if let title = course.title {
+            parameters["title"] = title as AnyObject?
+        }
+        if let description = course.description {
+            parameters["description"] = description as AnyObject?
+        }
+        
+        // quarter, weekDays, startTime, location
+        if let quarter = course.quarter {
+            parameters["quarter"] = quarter as AnyObject?
+        }
+        if let weekdays = course.weekdays {
+            parameters["weekDays"] = weekdays as AnyObject?
+        }
+        if let startTime = course.startTime {
+            parameters["startTime"] = startTime as AnyObject?
+        }
+        if let location = course.location {
+            parameters["location"] = location as AnyObject?
+        }
+        
+        // objectives
+        if let objectives = course.objectives {
+            parameters["objectives"] = objectives as AnyObject?
+        }
+        
+        // instructor
         if let instructor = course.instructor?.id {
             parameters["instructor"] = instructor as AnyObject?
         } else {
             complete(false, NSError(domain: "No course instructor id", code: 400, userInfo: nil))
-        }
-        
-        if let title = course.title {
-            parameters["title"] = title as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No course title", code: 400, userInfo: nil))
-        }
-        
-        if let description = course.description {
-            parameters["description"] = description as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No course description", code: 400, userInfo: nil))
-        }
-        
-        if let startsOn = course.startsOn {
-            parameters["startsOn"] = startsOn as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No course start date", code: 400, userInfo: nil))
-        }
-        
-        if let endsOn = course.endsOn {
-            parameters["endsOn"] = endsOn as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No course end date", code: 400, userInfo: nil))
-        }
-        
-        if let location = course.location {
-            parameters["location"] = location as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No course location", code: 400, userInfo: nil))
-        }
-        
-        if let hours = course.hours {
-            parameters["hours"] = hours as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No course hours", code: 400, userInfo: nil))
-        }
-        
-        if let objectives = course.objectives {
-            parameters["objectives"] = objectives as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No course objectives", code: 400, userInfo: nil))
         }
         
         // Request the data from api
@@ -190,18 +173,13 @@ extension CourseBoardAPI {
                 
             // Success
             case .success:
-                if let value = response.result.value {
-                    let json = JSON(value)
-                    
-                    print(json)
-                    
+                if let _ = response.result.value {
                     complete(true, nil)
                 }
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(false, error as NSError?)
             }
         }
@@ -209,11 +187,23 @@ extension CourseBoardAPI {
     }
     
     // MARK: Update Course -- READY
-    func updateCourse(course: Course, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
+    static func updateCourse(course: Course, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
+        
+        guard let id = course.id else {
+            print("Failed ID")
+            complete(false, NSError(domain: "No course id", code: 400, userInfo: nil))
+            return
+        }
+        
+        guard let instructor = course.instructor?.id else {
+            complete(false, NSError(domain: "No course instructor id", code: 400, userInfo: nil))
+            return
+        }
         
         // Create the path and url
-        let path = "/api/courses"
+        let path = "/api/courses/\(id)"
         let url = CourseBoardAPI.baseUrl + path
+        print(url)
         
         // Headers
         let headers = ["Authorization": "Basic " + CourseBoardAPI.authToken]
@@ -221,59 +211,38 @@ extension CourseBoardAPI {
         // Set up parameters with course
         var parameters: [String: AnyObject] = [:]
         
-        if let instructor = course.instructor?.id {
-            parameters["instructor"] = instructor as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No course instructor id", code: 400, userInfo: nil))
-        }
-        
+        // title, description
         if let title = course.title {
             parameters["title"] = title as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No course title", code: 400, userInfo: nil))
         }
-        
         if let description = course.description {
             parameters["description"] = description as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No course description", code: 400, userInfo: nil))
         }
         
-        if let startsOn = course.startsOn {
-            parameters["startsOn"] = startsOn as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No course start date", code: 400, userInfo: nil))
+        // quarter, weekDays, startTime, location
+        if let quarter = course.quarter {
+            parameters["quarter"] = quarter as AnyObject?
         }
-        
-        if let endsOn = course.endsOn {
-            parameters["endsOn"] = endsOn as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No course end date", code: 400, userInfo: nil))
+        if let weekdays = course.weekdays {
+            parameters["weekDays"] = weekdays as AnyObject?
         }
-        
+        if let startTime = course.startTime {
+            parameters["startTime"] = startTime as AnyObject?
+        }
         if let location = course.location {
             parameters["location"] = location as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No course location", code: 400, userInfo: nil))
         }
         
-        if let hours = course.hours {
-            parameters["hours"] = hours as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No course hours", code: 400, userInfo: nil))
-        }
-        
+        // objectives
         if let objectives = course.objectives {
             parameters["objectives"] = objectives as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No course objectives", code: 400, userInfo: nil))
         }
         
         // Request the data from api
         Alamofire.request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate().responseJSON() { response in
             
             switch response.result {
-                
+            
             // Success
             case .success:
                 if let value = response.result.value {
@@ -286,15 +255,14 @@ extension CourseBoardAPI {
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(false, error as NSError?)
             }
         }
     }
     
-    // MARK: Delete Course -- READY
-    func deleteCourse(id: String?, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
+    // MARK: Delete Course -- DONE
+    static func deleteCourse(id: String, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
         
         // Create the path and resource
         let path = "/api/courses/\(id)"
@@ -310,26 +278,21 @@ extension CourseBoardAPI {
             
             // Success
             case .success:
-                if let value = response.result.value {
-                    let json = JSON(value)
-                    
-                    print(json)
-                    
+                if let _ = response.result.value {
                     complete(true, nil)
                 }
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(false, error as NSError?)
             }
         }
         
     }
     
-    // MARK: Enroll Course -- READY
-    func enrollCourse(id: String?, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
+    // MARK: Enroll Course -- DONE
+    static func enrollCourse(id: String, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
         
         // Create the path and resource
         let path = "/api/courses/\(id)/enroll"
@@ -345,26 +308,21 @@ extension CourseBoardAPI {
                 
             // Success
             case .success:
-                if let value = response.result.value {
-                    let json = JSON(value)
-                    
-                    print(json)
-                    
+                if let _ = response.result.value {
                     complete(true, nil)
                 }
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(false, error as NSError?)
             }
         }
         
     }
     
-    // MARK: Unenroll Course -- READY
-    func unenrollCourse(id: String?, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
+    // MARK: Unenroll Course -- DONE
+    static func unenrollCourse(id: String, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
         
         // Create the path and resource
         let path = "/api/courses/\(id)/unenroll"
@@ -380,26 +338,21 @@ extension CourseBoardAPI {
                 
             // Success
             case .success:
-                if let value = response.result.value {
-                    let json = JSON(value)
-                    
-                    print(json)
-                    
+                if let _ = response.result.value {
                     complete(true, nil)
                 }
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(false, error as NSError?)
             }
         }
         
     }
     
-    // MARK: Publish Course -- READY
-    func publishCourse(id: String?, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
+    // MARK: Publish Course -- DONE
+    static func publishCourse(id: String, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
         
         // Create the path and resource
         let path = "/api/courses/\(id)/publish"
@@ -415,26 +368,21 @@ extension CourseBoardAPI {
                 
             // Success
             case .success:
-                if let value = response.result.value {
-                    let json = JSON(value)
-                    
-                    print(json)
-                    
+                if let _ = response.result.value {
                     complete(true, nil)
                 }
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(false, error as NSError?)
             }
         }
         
     }
     
-    // MARK: Unpublish Course -- READY
-    func unpublishCourse(id: String?, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
+    // MARK: Unpublish Course -- DONE
+    static func unpublishCourse(id: String, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
         
         // Create the path and resource
         let path = "/api/courses/\(id)/unpublish"
@@ -450,18 +398,13 @@ extension CourseBoardAPI {
                 
             // Success
             case .success:
-                if let value = response.result.value {
-                    let json = JSON(value)
-                    
-                    print(json)
-                    
+                if let _ = response.result.value {
                     complete(true, nil)
                 }
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(false, error as NSError?)
             }
         }

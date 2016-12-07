@@ -21,13 +21,22 @@ class Product {
     var liveUrl: String?
     
     var problem: String?
-    var customer: String?
     var assumptions: String?
     var finishedProduct: String?
     var mvp: String?
     
     var marketFit: Int?
     var nps: Int?
+    
+    var customer: String?
+    var valueProposition: String?
+    var channels: String?
+    var customerRelationships: String?
+    var revenueStreams: String?
+    var keyActivities: String?
+    var keyResources: String?
+    var keyPartners: String?
+    var costStructure: String?
     
     var course: Course?
     var instructor: User?
@@ -70,9 +79,6 @@ class Product {
         if let problem = json["problem"].string {
             self.problem = problem
         }
-        if let customer = json["customer"].string {
-            self.customer = customer
-        }
         if let assumptions = json["assumptions"].string {
             self.assumptions = assumptions
         }
@@ -89,6 +95,35 @@ class Product {
         }
         if let nps = json["nps"].int {
             self.nps = nps
+        }
+        
+        // customer, valueProposition, channels, customerRelationships, revenueStreams, keyActivities, keyResources, keyPartners, costStructure
+        if let customer = json["customer"].string {
+            self.customer = customer
+        }
+        if let valueProposition = json["valueProposition"].string {
+            self.valueProposition = valueProposition
+        }
+        if let channels = json["channels"].string {
+            self.channels = channels
+        }
+        if let customerRelationships = json["customerRelationships"].string {
+            self.customerRelationships = customerRelationships
+        }
+        if let revenueStreams = json["revenueStreams"].string {
+            self.revenueStreams = revenueStreams
+        }
+        if let keyActivities = json["keyActivities"].string {
+            self.keyActivities = keyActivities
+        }
+        if let keyResources = json["keyResources"].string {
+            self.keyResources = keyResources
+        }
+        if let keyPartners = json["keyPartners"].string {
+            self.keyPartners = keyPartners
+        }
+        if let costStructure = json["costStructure"].string {
+            self.costStructure = costStructure
         }
         
         // course

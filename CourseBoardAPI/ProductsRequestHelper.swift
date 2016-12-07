@@ -43,8 +43,7 @@ extension CourseBoardAPI {
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(nil, error as NSError?)
             }
         }
@@ -74,19 +73,18 @@ extension CourseBoardAPI {
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(nil, error as NSError?)
             }
         }
         
     }
     
-    // MARK: Create Product -- READY
+    // MARK: Create Product -- Done
     static func createProduct(product: Product, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
         
         // Create the path and url
-        let path = "/api/courses"
+        let path = "/api/products"
         let url = CourseBoardAPI.baseUrl + path
         
         // Headers
@@ -95,28 +93,77 @@ extension CourseBoardAPI {
         // Set up parameters with course
         var parameters: [String: AnyObject] = [:]
         
-        if let instructor = product.instructor?.id {
-            parameters["instructor"] = instructor as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No product instructor id", code: 400, userInfo: nil))
-        }
-
+        // name, githubUrl, agileUrl, liveUrl
         if let name = product.name {
             parameters["name"] = name as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No product name", code: 400, userInfo: nil))
+        }
+        if let githubUrl = product.githubUrl {
+            parameters["githubUrl"] = githubUrl as AnyObject?
+        }
+        if let agileUrl = product.agileUrl {
+            parameters["agileUrl"] = agileUrl as AnyObject?
+        }
+        if let liveUrl = product.liveUrl {
+            parameters["liveUrl"] = liveUrl as AnyObject?
         }
         
-        if let course = product.course?.id {
-            parameters["course"] = course as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No product course id", code: 400, userInfo: nil))
-        }
-        
+        // problem, customer, assumptions, finishedProduct, mvp
         if let problem = product.problem {
             parameters["problem"] = problem as AnyObject?
-        } else {
-            complete(false, NSError(domain: "No product problem", code: 400, userInfo: nil))
+        }
+        if let assumptions = product.assumptions {
+            parameters["assumptions"] = assumptions as AnyObject?
+        }
+        if let finishedProduct = product.finishedProduct {
+            parameters["finishedProduct"] = finishedProduct as AnyObject?
+        }
+        if let mvp = product.mvp {
+            parameters["mvp"] = mvp as AnyObject?
+        }
+        
+        // marketFit, nps
+        if let marketFit = product.marketFit {
+            parameters["marketFit"] = marketFit as AnyObject?
+        }
+        if let nps = product.nps {
+            parameters["nps"] = nps as AnyObject?
+        }
+        
+        // customer, valueProposition, channels, customerRelationships, revenueStreams, keyActivities, keyResources, keyPartners, costStructure
+        if let customer = product.customer {
+            parameters["customer"] = customer as AnyObject?
+        }
+        if let valueProposition = product.valueProposition {
+            parameters["valueProposition"] = valueProposition as AnyObject?
+        }
+        if let channels = product.channels {
+            parameters["channels"] = channels as AnyObject?
+        }
+        if let customerRelationships = product.customerRelationships {
+            parameters["customerRelationships"] = customerRelationships as AnyObject?
+        }
+        if let revenueStreams = product.revenueStreams {
+            parameters["revenueStreams"] = revenueStreams as AnyObject?
+        }
+        if let keyActivities = product.keyActivities {
+            parameters["keyActivities"] = keyActivities as AnyObject?
+        }
+        if let keyResources = product.keyResources {
+            parameters["keyResources"] = keyResources as AnyObject?
+        }
+        if let keyPartners = product.keyPartners {
+            parameters["keyPartners"] = keyPartners as AnyObject?
+        }
+        if let costStructure = product.costStructure {
+            parameters["costStructure"] = costStructure as AnyObject?
+        }
+        
+        // course, instructor
+        if let course = product.course?.id {
+            parameters["course"] = course as AnyObject?
+        }
+        if let instructor = product.instructor?.id {
+            parameters["instructor"] = instructor as AnyObject?
         }
         
         // Request the data from api
@@ -136,8 +183,7 @@ extension CourseBoardAPI {
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(false, error as NSError?)
             }
         }
@@ -145,7 +191,7 @@ extension CourseBoardAPI {
     }
     
     // MARK: Update Product -- READY
-    func updateProduct(product: Product, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
+    static func updateProduct(product: Product, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
         
         // Create the path and url
         let path = "/api/products"
@@ -188,25 +234,20 @@ extension CourseBoardAPI {
                 
             // Success
             case .success:
-                if let value = response.result.value {
-                    let json = JSON(value)
-                    
-                    print(json)
-                    
+                if let _ = response.result.value {
                     complete(true, nil)
                 }
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(false, error as NSError?)
             }
         }
     }
     
-    // MARK: Delete Product -- READY
-    func deleteProduct(id: String?, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
+    // MARK: Delete Product -- DONE
+    static func deleteProduct(id: String, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
         
         // Create the path and resource
         let path = "/api/products/\(id)"
@@ -222,26 +263,21 @@ extension CourseBoardAPI {
                 
             // Success
             case .success:
-                if let value = response.result.value {
-                    let json = JSON(value)
-                    
-                    print(json)
-                    
+                if let _ = response.result.value {
                     complete(true, nil)
                 }
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(false, error as NSError?)
             }
         }
         
     }
     
-    // MARK: Join Product -- READY
-    func joinProduct(id: String?, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
+    // MARK: Join Product -- DONE
+    static func joinProduct(id: String, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
         
         // Create the path and resource
         let path = "/api/products/\(id)/join"
@@ -258,25 +294,20 @@ extension CourseBoardAPI {
             // Success
             case .success:
                 if let value = response.result.value {
-                    let json = JSON(value)
-                    
-                    print(json)
-                    
                     complete(true, nil)
                 }
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(false, error as NSError?)
             }
         }
         
     }
     
-    // MARK: Leave Product -- READY
-    func leaveProduct(id: String?, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
+    // MARK: Leave Product -- DONE
+    static func leaveProduct(id: String, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
         
         // Create the path and resource
         let path = "/api/products/\(id)/leave"
@@ -293,17 +324,12 @@ extension CourseBoardAPI {
             // Success
             case .success:
                 if let value = response.result.value {
-                    let json = JSON(value)
-                    
-                    print(json)
-                    
                     complete(true, nil)
                 }
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(false, error as NSError?)
             }
         }

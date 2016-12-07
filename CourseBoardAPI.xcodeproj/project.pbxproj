@@ -68,6 +68,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		013775691DF792F400F31231 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				01D3891D1DA6EDB20052C44B /* CourseRequestHelper.swift */,
+				013EC4041DB5E5F40001E300 /* ProductsRequestHelper.swift */,
+				01463BF21DBC35B700F0B08D /* UserRequestHelper.swift */,
+				016323FC1DBCA2EB006B4437 /* PostRequestHelper.swift */,
+				016323FE1DBCA2FD006B4437 /* UpdateRequestHelper.swift */,
+				016324001DBCA30F006B4437 /* CompetencyRequestHelper.swift */,
+				018323DE1DAA037800864989 /* RequestHelper.swift */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
 		01DCAAF11DA4452500828C7F = {
 			isa = PBXGroup;
 			children = (
@@ -89,8 +103,9 @@
 		01DCAAFC1DA4452600828C7F /* CourseBoardAPI */ = {
 			isa = PBXGroup;
 			children = (
-				01DCAB101DA4453900828C7F /* Models */,
 				01DCAB0F1DA4452D00828C7F /* Helpers */,
+				01DCAB101DA4453900828C7F /* Models */,
+				013775691DF792F400F31231 /* Networking */,
 				01DCAAFD1DA4452600828C7F /* AppDelegate.swift */,
 				01DCAAFF1DA4452600828C7F /* ViewController.swift */,
 				01DCAB011DA4452600828C7F /* Main.storyboard */,
@@ -104,13 +119,6 @@
 		01DCAB0F1DA4452D00828C7F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				01D3891D1DA6EDB20052C44B /* CourseRequestHelper.swift */,
-				013EC4041DB5E5F40001E300 /* ProductsRequestHelper.swift */,
-				01463BF21DBC35B700F0B08D /* UserRequestHelper.swift */,
-				016323FC1DBCA2EB006B4437 /* PostRequestHelper.swift */,
-				016323FE1DBCA2FD006B4437 /* UpdateRequestHelper.swift */,
-				016324001DBCA30F006B4437 /* CompetencyRequestHelper.swift */,
-				018323DE1DAA037800864989 /* RequestHelper.swift */,
 				01C96B851DB30C8F0079CDA5 /* DateHelper.swift */,
 			);
 			name = Helpers;

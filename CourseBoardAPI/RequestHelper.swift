@@ -11,6 +11,7 @@ import Foundation
 class CourseBoardAPI {
     
     static var authToken = ""
-    static let baseUrl = "http://meancourseboard.herokuapp.com"
+    //static let baseUrl = "http://meancourseboard.herokuapp.com"
+    static let baseUrl = "http://localhost:1337"
     
 }

@@ -12,8 +12,8 @@ import SwiftyJSON
 
 extension CourseBoardAPI {
     
-    // MARK: Get Updates -- READY
-    static func getUpdates(productId: String, update: Update, complete: @escaping ( _ updates: [Update]?, _ error: NSError?) -> Void) {
+    // MARK: Get Updates -- DONE
+    static func getUpdates(productId: String, complete: @escaping ( _ updates: [Update]?, _ error: NSError?) -> Void) {
         
         // Create the path and url
         let path = "/api/products/\(productId)/updates"
