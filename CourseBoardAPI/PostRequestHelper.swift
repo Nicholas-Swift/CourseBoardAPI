@@ -95,7 +95,7 @@ extension CourseBoardAPI {
         }
     }
     
-    // MARK: Create Post -- READY
+    // MARK: Create Post -- DONE
     static func createPost(courseId: String, post: Post, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
         
         // Create the path and url
@@ -197,21 +197,23 @@ extension CourseBoardAPI {
         
     }
     
-    // MARK: Delete Post -- READY
+    // MARK: Delete Post -- DONE
     static func deletePost(courseId: String, postId: String, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
         
         // Create the path and url
         let path = "/api/courses/\(courseId)/posts/\(postId)"
         let url = CourseBoardAPI.baseUrl + path
         
+        print("URL: \(url)")
+        
         // Headers
         let headers = ["Authorization": "Basic " + CourseBoardAPI.authToken]
         
         // Request the data from api
-        Alamofire.request(url, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: headers).validate().responseJSON() { response in
+        Alamofire.request(url, method: .delete, parameters: nil, encoding: JSONEncoding.default, headers: headers).validate().responseJSON() { response in
             
             switch response.result {
-                
+            
             // Success
             case .success:
                 if let value = response.result.value {

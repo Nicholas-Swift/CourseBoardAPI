@@ -47,8 +47,7 @@ extension CourseBoardAPI {
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(nil, error as NSError?)
             }
         }
@@ -89,8 +88,7 @@ extension CourseBoardAPI {
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(nil, error as NSError?)
             }
         }
@@ -123,8 +121,7 @@ extension CourseBoardAPI {
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(nil, error as NSError?)
             }
         }
@@ -157,8 +154,7 @@ extension CourseBoardAPI {
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(nil, error as NSError?)
             }
         }
@@ -193,8 +189,7 @@ extension CourseBoardAPI {
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(false, error as NSError?)
             }
         }
@@ -234,15 +229,22 @@ extension CourseBoardAPI {
         }
     }
     
-    // Signup -- READY
-    static func signup(email: String, username: String, password: String, complete: @escaping (_ success: Bool, _ error: NSError?) -> Void) {
+    // Signup -- DONE
+    static func signup(email: String, username: String, password: String, role: String = "Student", first: String? = nil, last: String? = nil, complete: @escaping (_ success: Bool, _ error: NSError?) -> Void) {
         
         // Create the path and url
         let path = "/auth/signup"
         let url = CourseBoardAPI.baseUrl + path
         
         // Set up parameters
-        let parameters = ["email": email, "username": username, "password": password]
+        var parameters = ["email": email, "username": username, "password": password, "role": role]
+        
+        if let first = first {
+            parameters["first"] = first
+        }
+        if let last = last {
+            parameters["last"] = last
+        }
         
         // Request the data from API
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).validate().responseJSON() { response in
@@ -254,15 +256,15 @@ extension CourseBoardAPI {
                 if let value = response.result.value {
                     let json = JSON(value)
                     
-                    print(json)
-                    
+                    let token = json["token"].stringValue
+                    CourseBoardAPI.authToken = token
+
                     complete(true, nil)
                 }
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(false, error as NSError?)
             }
         }
@@ -329,8 +331,7 @@ extension CourseBoardAPI {
                 
             // Failure
             case .failure(let error):
-                print("error:")
-                print(error)
+                print("error: \(error)")
                 complete(false, error as NSError?)
             }
         }

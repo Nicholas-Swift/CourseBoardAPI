@@ -16,7 +16,7 @@ extension CourseBoardAPI {
     static func updateCompetence(userId: String, competency: Competency, complete: @escaping ( _ bool: Bool?, _ error: NSError?) -> Void) {
         
         // Create the path and url
-        let path = "/api/users/\(userId)/competencies"
+        let path = "/api/user/\(userId)/feedback"
         let url = CourseBoardAPI.baseUrl + path
         
         // Headers
